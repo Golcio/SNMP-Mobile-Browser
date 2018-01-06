@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single"></group>
+    <item
+        android:id="@+id/sysdescr"
+        android:icon="@drawable/ic_menu_send"
+        android:title="sysDescr" />
+    <item
+        android:id="@+id/sysobjectid"
+        android:icon="@drawable/ic_menu_send"
+        android:title="sysObjectID" />
+    <item
+        android:id="@+id/sysuptime"
+        android:icon="@drawable/ic_menu_send"
+        android:title="sysUpTime" />
+    <item
+        android:id="@+id/ifnumber"
+        android:icon="@drawable/ic_menu_send"
+        android:title="ifNumber" />
+    <item
+        android:id="@+id/ipinreceives"
+        android:icon="@drawable/ic_menu_send"
+        android:title="ipInReceives" />
+    <item
+        android:id="@+id/ipinhdrerrors"
+        android:icon="@drawable/ic_menu_send"
+        android:title="ipInHdrErrors" />
+    <item
+        android:id="@+id/ipinaddrerrors"
+        android:icon="@drawable/ic_menu_send"
+        android:title="ipInAddrErrors" />
+    <item
+        android:id="@+id/ipforwdatagrams"
+        android:icon="@drawable/ic_menu_send"
+        android:title="ipForwDatagrams" />
+    <item
+        android:id="@+id/ipinunknownprotos"
+        android:icon="@drawable/ic_menu_send"
+        android:title="ipInUnknownProtos" />
+    <item
+        android:id="@+id/ipindiscards"
+        android:icon="@drawable/ic_menu_send"
+        android:title="ipInDiscards" />
+
+</menu>
