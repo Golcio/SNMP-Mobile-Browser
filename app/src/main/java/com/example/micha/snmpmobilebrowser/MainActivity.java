@@ -18,19 +18,28 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView textview;
+    TextView r1c2;
+    TextView r2c2;
+    TextView r3c2;
+    TextView r4c2;
     Socket socket;
     Socket socket2;
     String ipAddress;
@@ -40,6 +49,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textview = findViewById(R.id.textView);
+        r1c2 = findViewById(R.id.r1c2);
+        r2c2 = findViewById(R.id.r2c2);
+        r3c2 = findViewById(R.id.r3c2);
+        r4c2 = findViewById(R.id.r4c2);
         NavigationView mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
         if (mNavigationView != null) {
@@ -91,26 +104,35 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.sysdescr) {
             sendQuery(".1.3.6.1.2.1.1.1.0");
+            textview.setText("sysdescr");
         } else if (id == R.id.sysobjectid) {
-            sendQuery("sysObjectID");
+            sendQuery(".1.3.6.1.2.1.1.2.0");
+            textview.setText("sysobjectid");
         } else if (id == R.id.sysuptime) {
-            sendQuery("sysUpTime");
+            sendQuery(".1.3.6.1.2.1.1.3.0");
+            textview.setText("sysuptime");
         } else if (id == R.id.ifnumber) {
-            sendQuery("ifNumber");
+            sendQuery(".1.3.6.1.2.1.2.1.0");
+            textview.setText("ifnumber");
         } else if (id == R.id.ipinreceives) {
-            sendQuery("ipInReceives");
+            sendQuery(".1.3.6.1.2.1.4.3.0");
+            textview.setText("ipinreceives");
         } else if (id == R.id.ipinhdrerrors) {
-            sendQuery("ipInHdrErrors");
+            sendQuery(".1.3.6.1.2.1.4.4.0");
+            textview.setText("ipinhdrerrors");
         } else if (id == R.id.ipinaddrerrors) {
-            sendQuery("ipInAddrErrors");
+            sendQuery(".1.3.6.1.2.1.4.5.0");
+            textview.setText("ipinaddrerrors");
         } else if (id == R.id.ipforwdatagrams) {
-            sendQuery("ipForwDatagrams");
+            sendQuery(".1.3.6.1.2.1.4.6.0");
+            textview.setText("ipforwdatagrams");
         } else if (id == R.id.ipinunknownprotos) {
-            sendQuery("ipInUnknownProtos");
+            sendQuery(".1.3.6.1.2.1.4.7.0");
+            textview.setText("ipinunknownprotos");
         } else if (id == R.id.ipindiscards) {
-            sendQuery("ipInDiscards");
+            sendQuery(".1.3.6.1.2.1.4.8.0");
+            textview.setText("ipindiscards");
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -118,30 +140,63 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void sendQuery(String name) {
-        textview.setText(ipAddress);
         new Thread(() -> socketSend(name)).start();
 
     }
 
-    public void socketSend(String name)
-    {
+    public void socketSend(String name) {
         try {
-            socket = new Socket("192.168.43.230", 14000);
-            OutputStream out = socket.getOutputStream();
-            //PrintWriter output = new PrintWriter(out);
-            String message = "get|" + name + "|" + ipAddress;
+            Socket socket = new Socket("192.168.0.19", 14000);
+            InputStream is = socket.getInputStream();
+            OutputStream os = socket.getOutputStream();
+            PrintWriter printWriter = new PrintWriter(os, true);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            String message = "get|" + name;
             byte[] b = message.getBytes(StandardCharsets.UTF_8);
-            //output.println(b);
-            out.write(b);
-            //out.flush();
-            out.close();
-            //socket.close();
-            InputStream stream = socket.getInputStream();
-            byte[] data = new byte[100];
-            String messagereceived = new String(data, StandardCharsets.UTF_8);
-            textview.setText(messagereceived);
-        } catch (IOException e) {
-            e.printStackTrace();
+            os.write(b);
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                total.append(line).append('\n');
+            }
+            String totalstring = total.toString();
+            if (!totalstring.contains("No results")){
+                String[] results = totalstring.split("_");
+                r1c2.setText(results[0]);
+                r2c2.setText(results[1]);
+                r3c2.setText(results[2]);
+                r4c2.setText(results[3]);
+            }
+            else {
+                r1c2.setText("-");
+                r2c2.setText("-");
+                r3c2.setText("-");
+                r4c2.setText("-");
+            }
+            printWriter.close();
+            os.close();
+            is.close();
+            socket.close();
+            /*
+            socket = new Socket("192.168.0.19", 14000);
+            OutputStream os = socket.getOutputStream();
+            String message = "get|" + name;
+            byte[] b = message.getBytes(StandardCharsets.UTF_8);
+            os.write(b);
+            os.close();
+
+            InputStream is = socket.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String currentLine = null;
+            while ((currentLine = br.readLine()) != null)
+                textview.setText(currentLine);
+            is.close();
+
+            socket.close();
+            */
+        } catch (Exception ioex) {
+            textview.setText("Can't connect with agent");
         }
     }
 }

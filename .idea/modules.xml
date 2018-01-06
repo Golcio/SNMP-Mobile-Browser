@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SNMPMobileBrowser.iml" filepath="$PROJECT_DIR$/SNMPMobileBrowser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SNMP-Mobile-Browser.iml" filepath="$PROJECT_DIR$/SNMP-Mobile-Browser.iml" />
+      <module fileurl="file://C:\Users\Krzysztof\GitHub\SNMP-Mobile-Browser\SNMPMobileBrowser.iml" filepath="C:\Users\Krzysztof\GitHub\SNMP-Mobile-Browser\SNMPMobileBrowser.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
