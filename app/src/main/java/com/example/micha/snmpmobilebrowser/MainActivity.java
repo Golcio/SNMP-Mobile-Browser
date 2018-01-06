@@ -1,7 +1,9 @@
 package com.example.micha.snmpmobilebrowser;
 
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.text.format.Formatter;
@@ -15,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,9 +44,11 @@ public class MainActivity extends AppCompatActivity
     TextView r2c2;
     TextView r3c2;
     TextView r4c2;
-    Socket socket;
-    Socket socket2;
-    String ipAddress;
+    EditText ip;
+    EditText port;
+    Button save;
+    String ipaddress;
+    int sendport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +59,23 @@ public class MainActivity extends AppCompatActivity
         r2c2 = findViewById(R.id.r2c2);
         r3c2 = findViewById(R.id.r3c2);
         r4c2 = findViewById(R.id.r4c2);
+        ip = findViewById(R.id.ipaddress);
+        port = findViewById(R.id.port);
+        save = findViewById(R.id.savebutton);
         NavigationView mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
         if (mNavigationView != null) {
             mNavigationView.setNavigationItemSelectedListener(this);
         }
 
-        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ipaddress = ip.getText().toString();
+                sendport = Integer.parseInt(port.getText().toString());
+
+            }
+        });
     }
 
 
@@ -146,7 +161,7 @@ public class MainActivity extends AppCompatActivity
 
     public void socketSend(String name) {
         try {
-            Socket socket = new Socket("192.168.0.19", 14000);
+            Socket socket = new Socket(ipaddress, sendport);
             InputStream is = socket.getInputStream();
             OutputStream os = socket.getOutputStream();
             PrintWriter printWriter = new PrintWriter(os, true);
