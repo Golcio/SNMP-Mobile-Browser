@@ -176,40 +176,26 @@ public class MainActivity extends AppCompatActivity
                 total.append(line).append('\n');
             }
             String totalstring = total.toString();
-            if (!totalstring.contains("No results")){
-                String[] results = totalstring.split("_");
-                r1c2.setText(results[0]);
-                r2c2.setText(results[1]);
-                r3c2.setText(results[2]);
-                r4c2.setText(results[3]);
-            }
-            else {
-                r1c2.setText("-");
-                r2c2.setText("-");
-                r3c2.setText("-");
-                r4c2.setText("-");
-            }
+            runOnUiThread(() -> {
+                if (!totalstring.contains("No results")){
+                    String[] results = totalstring.split("_");
+                    r1c2.setText(results[0]);
+                    r2c2.setText(results[1]);
+                    r3c2.setText(results[2]);
+                    r4c2.setText(results[3]);
+                }
+                else {
+                    r1c2.setText("-");
+                    r2c2.setText("-");
+                    r3c2.setText("-");
+                    r4c2.setText("-");
+                }
+
+            });
             printWriter.close();
             os.close();
             is.close();
             socket.close();
-            /*
-            socket = new Socket("192.168.0.19", 14000);
-            OutputStream os = socket.getOutputStream();
-            String message = "get|" + name;
-            byte[] b = message.getBytes(StandardCharsets.UTF_8);
-            os.write(b);
-            os.close();
-
-            InputStream is = socket.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String currentLine = null;
-            while ((currentLine = br.readLine()) != null)
-                textview.setText(currentLine);
-            is.close();
-
-            socket.close();
-            */
         } catch (Exception ioex) {
             textview.setText("Can't connect with agent");
         }
