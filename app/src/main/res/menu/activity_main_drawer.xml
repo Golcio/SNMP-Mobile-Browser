@@ -6,9 +6,9 @@
 
     <group android:checkableBehavior="single"></group>
     <item
-        android:id="@+id/sysdescr"
+        android:id="@+id/ipindelivers"
         android:icon="@drawable/ic_menu_send"
-        android:title="sysDescr" />
+        android:title="ipInDelivers" />
     <item
         android:id="@+id/sysobjectid"
         android:icon="@drawable/ic_menu_send"

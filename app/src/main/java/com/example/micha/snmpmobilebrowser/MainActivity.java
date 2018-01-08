@@ -117,36 +117,36 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.sysdescr) {
-            sendQuery(".1.3.6.1.2.1.1.1.0");
-            textview.setText("sysdescr");
+        if (id == R.id.ipindelivers) {
+            sendQuery(".1.3.6.1.2.1.4.9.0");
+            textview.setText("ipInDelivers");
         } else if (id == R.id.sysobjectid) {
             sendQuery(".1.3.6.1.2.1.1.2.0");
-            textview.setText("sysobjectid");
+            textview.setText("sysObjectID");
         } else if (id == R.id.sysuptime) {
             sendQuery(".1.3.6.1.2.1.1.3.0");
-            textview.setText("sysuptime");
+            textview.setText("sysUpTime");
         } else if (id == R.id.ifnumber) {
             sendQuery(".1.3.6.1.2.1.2.1.0");
-            textview.setText("ifnumber");
+            textview.setText("ifNumber");
         } else if (id == R.id.ipinreceives) {
             sendQuery(".1.3.6.1.2.1.4.3.0");
-            textview.setText("ipinreceives");
+            textview.setText("ipInReceives");
         } else if (id == R.id.ipinhdrerrors) {
             sendQuery(".1.3.6.1.2.1.4.4.0");
-            textview.setText("ipinhdrerrors");
+            textview.setText("ipInHdrErrors");
         } else if (id == R.id.ipinaddrerrors) {
             sendQuery(".1.3.6.1.2.1.4.5.0");
-            textview.setText("ipinaddrerrors");
+            textview.setText("ipInAddrErrors");
         } else if (id == R.id.ipforwdatagrams) {
             sendQuery(".1.3.6.1.2.1.4.6.0");
-            textview.setText("ipforwdatagrams");
+            textview.setText("ipForwDatagrams");
         } else if (id == R.id.ipinunknownprotos) {
             sendQuery(".1.3.6.1.2.1.4.7.0");
-            textview.setText("ipinunknownprotos");
+            textview.setText("ipInUnknownProtos");
         } else if (id == R.id.ipindiscards) {
             sendQuery(".1.3.6.1.2.1.4.8.0");
-            textview.setText("ipindiscards");
+            textview.setText("ipInDiscards");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
