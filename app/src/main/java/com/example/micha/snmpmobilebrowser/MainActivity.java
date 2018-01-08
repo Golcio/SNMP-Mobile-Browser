@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -168,14 +170,19 @@ public class MainActivity extends AppCompatActivity
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             String message = "get|" + name;
-            byte[] b = message.getBytes(StandardCharsets.UTF_8);
+            SNMPQuery newquery = new SNMPQuery(message);
+            Gson gson = new Gson();
+            String serializedquery = gson.toJson(newquery);
+            byte[] b = serializedquery.getBytes(StandardCharsets.UTF_8);
             os.write(b);
             StringBuilder total = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
                 total.append(line).append('\n');
             }
-            String totalstring = total.toString();
+            String totalstring1 = total.toString();
+            newquery = new Gson().fromJson(totalstring1, SNMPQuery.class);
+            String totalstring = newquery.message;
             runOnUiThread(() -> {
                 if (!totalstring.contains("No results")){
                     String[] results = totalstring.split("_");
