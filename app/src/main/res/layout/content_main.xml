@@ -138,7 +138,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:inputType="textMultiLine"
+        android:inputType="phone"
         android:text="192.168.43.230"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
